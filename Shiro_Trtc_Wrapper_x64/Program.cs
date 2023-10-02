@@ -35,6 +35,7 @@ namespace Shiro_Trtc_Wrapper_x64
             {
                 ret.Add(GetDevice(devices, i));
             }
+            ret.Add(GetNullDevice());
             return ret;
         }
 
@@ -44,6 +45,17 @@ namespace Shiro_Trtc_Wrapper_x64
             {
                 DeviceName = devices.getDeviceName(i),
                 DevicePID = devices.getDevicePID(i)
+            };
+            return device;
+        }
+
+
+        public static TXDevice GetNullDevice()
+        {
+            var device = new TXDevice
+            {
+                DeviceName = "/",
+                DevicePID = "NoneQwQ_Empty"
             };
             return device;
         }

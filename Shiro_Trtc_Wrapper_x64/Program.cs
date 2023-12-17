@@ -8,7 +8,6 @@ namespace Shiro_Trtc_Wrapper_x64
 {
     class Program
     {
-        public ITRTCCloud mTRTCCloud;
 
         static void Main(string[] args)
         {
@@ -34,6 +33,7 @@ namespace Shiro_Trtc_Wrapper_x64
                 Speakers = GetAllDevicesFromCollection(manager.getDevicesList(TXMediaDeviceType.TXMediaDeviceTypeSpeaker), addEmpty)
             };
             Console.WriteLine(JsonConvert.SerializeObject(returnedJson));
+            mTRTCCloud = null;
         }
 
         public static List<TXDevice> GetAllDevicesFromCollection(ITRTCDeviceCollection devices, bool addEmpty)

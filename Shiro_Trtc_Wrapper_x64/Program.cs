@@ -18,24 +18,35 @@ namespace Shiro_Trtc_Wrapper_x64
 
             var manager = mTRTCCloud.getDeviceManager();
 
+            bool addEmpty = false;
+            if (args.Length > 0)
+            {
+                if (args[0].ToString() == "E" || args[0].ToString() == "-E")
+                {
+                    addEmpty = true;
+                }
+            }
 
             var returnedJson = new TXJson
             {
-                Cameras = GetAllDevicesFromCollection(manager.getDevicesList(TXMediaDeviceType.TXMediaDeviceTypeCamera)),
-                Mics = GetAllDevicesFromCollection(manager.getDevicesList(TXMediaDeviceType.TXMediaDeviceTypeMic)),
-                Speakers = GetAllDevicesFromCollection(manager.getDevicesList(TXMediaDeviceType.TXMediaDeviceTypeSpeaker))
+                Cameras = GetAllDevicesFromCollection(manager.getDevicesList(TXMediaDeviceType.TXMediaDeviceTypeCamera), addEmpty),
+                Mics = GetAllDevicesFromCollection(manager.getDevicesList(TXMediaDeviceType.TXMediaDeviceTypeMic), addEmpty),
+                Speakers = GetAllDevicesFromCollection(manager.getDevicesList(TXMediaDeviceType.TXMediaDeviceTypeSpeaker), addEmpty)
             };
             Console.WriteLine(JsonConvert.SerializeObject(returnedJson));
         }
 
-        public static List<TXDevice> GetAllDevicesFromCollection(ITRTCDeviceCollection devices)
+        public static List<TXDevice> GetAllDevicesFromCollection(ITRTCDeviceCollection devices, bool addEmpty)
         {
             var ret = new List<TXDevice>();
             for (uint i = 0; i < devices.getCount(); i++)
             {
                 ret.Add(GetDevice(devices, i));
             }
-            ret.Add(GetNullDevice());
+            if (addEmpty)
+            {
+                ret.Add(GetNullDevice());
+            }
             return ret;
         }
 
